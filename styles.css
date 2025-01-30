@@ -1,53 +1,48 @@
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f4f4f4;
     font-family: Arial, sans-serif;
-}
-.grid-container {
-    position: relative;
-    width: 300px;
-    height: 300px;
-}
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-template-rows: repeat(3, 100px);
-    gap: 5px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
-.cell {
-    width: 100px;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    border: 1px solid #333;
-    font-size: 14px;
+    background-color: #f4f4f4;
     text-align: center;
 }
-.cell-label {
-    position: absolute;
-    top: -20px;
-    right: -5px;
-    font-size: 12px;
-    color: #555;
+
+.container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
-.button {
-    margin-top: 20px;
-    padding: 10px;
-    font-size: 16px;
+
+h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+td {
+    width: 33%;
+    height: 80px;
+    border: 1px solid #ccc;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    background-color: #f9f9f9;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
 }
-.piece {
-    width: 30px;
-    height: 30px;
-    background-size: cover;
+
+button:hover {
+    background-color: #0056b3;
 }
