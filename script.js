@@ -24,6 +24,28 @@ function generateGrid() {
         doorPlacement[cellNames[(firstDoorIndex + i) % 9]] = doors[i];
     }
 
+    // สุ่มข้อความ U1-U12 และ L1-L12
+    const upperMessages = [
+        "วังชะตา(เหมี่ยเก็ง)", "วังลาภะ(ไฉ่แป๊ะ)", "วังญาติ(เฮียตี๋)",
+        "วังอสังหา(ฉั่งแทะ)", "วังบุตร(หน่ำนึ่ง)", "วังบริวาร(หน่งป๊ก)",
+        "วังสมรส(ซีเฉียบ)", "วังสุขภาพ(จิบแอะ)", "วังเดินทาง(เซียงอี๊)",
+        "วังอำนาจ(กัวลก)", "วังวาสนา (ฮกเต็ก)", "วังคุณค่า(เซี่ยงเหมา)"
+    ];
+    const lowerMessages = [
+        "พัฒนา(เชี่ยงแซ)", "เสน่หา(หมกยก)", "บัณฑิต(กวงตั่ว)", 
+        "ตำแหน่ง(ลิ่มกัว)", "ศักดิ์ศรี(ตี้อ๋วง)", "เสื่อม(ซวย)", 
+        "เจ็บป่วย(แป่)", "มรณะ(ซี่)", "กองคลัง(หมอ)", "สูญสิ้น(เจ๊าะ)", 
+        "ครรภ์(ทอ)", "ทารก(เอี๊ยง)"
+    ];
+
+    // สุ่มข้อความ U1-U12 และ L1-L12 ในแต่ละช่อง
+    const upperPlacement = {};
+    const lowerPlacement = {};
+    for (let i = 0; i < 9; i++) {
+        upperPlacement[cellNames[i]] = upperMessages[i % 12];
+        lowerPlacement[cellNames[i]] = lowerMessages[i % 12];
+    }
+
     // สุ่มหมาก
     const pieces = ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9", "I0"];
     const pieceImages = {
@@ -31,36 +53,4 @@ function generateGrid() {
         I2: "https://via.placeholder.com/30/FF0000/FFFFFF?text=I2", // red triangle
         I3: "https://via.placeholder.com/30/00FF00/FFFFFF?text=I3", // green square
         I4: "https://via.placeholder.com/30/FFFFFF/000000?text=I4", // white circle
-        I5: "https://via.placeholder.com/30/FFFF00/FFFFFF?text=I5"  // yellow square
-    };
-    
-    // สุ่มหมากในแต่ละช่อง
-    const piecePlacement = {};
-    for (let i = 0; i < pieces.length; i++) {
-        const piece = pieces[i];
-        piecePlacement[cellNames[i % 9]] = pieceImages[piece] || "";
-    }
-
-    // สร้างตารางประตู
-    for (let i = 0; i < 9; i++) {
-        const cellId = cellNames[i];
-        const door = doorPlacement[cellId] || "";  // แสดงประตูในตำแหน่งที่สุ่ม
-        const pieceImage = piecePlacement[cellId] || "";  // รูปหมากในช่อง
-
-        const cell = document.createElement("div");
-        cell.className = "cell";
-        
-        // แสดงประตู
-        cell.innerHTML = door;
-        
-        // แสดงหมากเป็นรูปภาพ
-        if (pieceImage) {
-            const piece = document.createElement("div");
-            piece.className = "piece";
-            piece.style.backgroundImage = `url(${pieceImage})`;
-            cell.appendChild(piece);
-        }
-
-        gridContainer.appendChild(cell);
-    }
-}
+        I5: "https://via.placeholder.com/30/FFFF0
