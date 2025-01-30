@@ -90,38 +90,4 @@
             const doorPlacement = {};
             const firstDoorIndex = getRandomInt(0, 7);  // Random position for the first door
             for (let i = 0; i < doors.length; i++) {
-                doorPlacement[doorPositions[(firstDoorIndex + i) % 8]] = doors[i];
-            }
-
-            const piecePlacement = {};
-            piecePlacement[`A${getRandomInt(1, 3)}`] = pieces[0];
-
-            let index = 0;
-            for (let row = 1; row <= 3; row++) {
-                for (let col of ['A', 'B', 'C']) {
-                    const cellId = `${col}${row}`;
-                    const upperNum = upperNumbers[index % 12];
-                    const lowerNum = lowerNumbers[index % 12];
-                    const door = doorPlacement[cellId] || "";
-                    const piece = piecePlacement[cellId] || "";
-
-                    const cell = document.createElement("div");
-                    cell.className = "cell";
-                    cell.innerHTML = `${door}<br>${upperNum}<br>${lowerNum}<br>${piece}`;
-
-                    // Add label A1-A3, B1-B3, C1-C3
-                    const label = document.createElement("div");
-                    label.className = "cell-label";
-                    label.innerText = `${col}${row}`;
-                    cell.appendChild(label);
-
-                    gridContainer.appendChild(cell);
-                    index++;
-                }
-            }
-        }
-
-        generateGrid();
-    </script>
-</body>
-</html>
+                // Assign doors starting from the random position, then 
