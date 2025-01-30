@@ -1,56 +1,64 @@
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+const upperNumbers = ['วังชะตา(เหมี่ยเก็ง)', 'วังลาภะ(ไฉ่แป๊ะ)', 'วังญาติ(เฮียตี๋)', 'วังอสังหา(ฉั่งแทะ)', 'วังบุตร(หน่ำนึ่ง)', 
+                      'วังบริวาร(หน่งป๊ก)', 'วังสมรส(ซีเฉียบ)', 'วังสุขภาพ(จิบแอะ)', 'วังเดินทาง(เซียงอี๊)', 'วังอำนาจ(กัวลก)', 
+                      'วังวาสนา (ฮกเต็ก)', 'วังคุณค่า(เซี่ยงเหมา)'];
+
+const lowerNumbers = ['พัฒนา(เชี่ยงแซ)', 'เสน่หา(หมกยก)', 'บัณฑิต(กวงตั่ว)', 'ตำแหน่ง(ลิ่มกัว)', 'ศักดิ์ศรี(ตี้อ๋วง)', 
+                      'เสื่อม(ซวย)', 'เจ็บป่วย(แป่)', 'มรณะ(ซี่)', 'กองคลัง(หมอ)', 'สูญสิ้น(เจ๊าะ)', 
+                      'ครรภ์(ทอ)', 'ทารก(เอี๊ยง)'];
+
+const doors = ['ประตูไค', 'ประตูฮิว', 'ประตูแซ', 'ประตูเซีย', 'ประตูโต๋ว', 'ประตูเก้ง', 'ประตูซี่', 'ประตูเกีย'];
+
+const pieces = [
+    { id: 'I1', type: 'น้ำ', color: 'blue' }, { id: 'I2', type: 'ไฟ', color: 'red' }, { id: 'I3', type: 'ไม้', color: 'green' }, 
+    { id: 'I4', type: 'ทอง', color: 'white' }, { id: 'I5', type: 'ดิน', color: 'yellow' },
+    { id: 'I6', type: 'น้ำ', color: 'blue' }, { id: 'I7', type: 'ไฟ', color: 'red' }, { id: 'I8', type: 'ไม้', color: 'green' }, 
+    { id: 'I9', type: 'ทอง', color: 'white' }, { id: 'I10', type: 'ดิน', color: 'yellow' }
+];
+
+const grid = ['A1', 'B1', 'C1', 'A2', 'B2', 'C2', 'A3', 'B3', 'C3'];
+let currentDoors = [];
+let currentPieces = [];
+
+function getRandomIndex(arr) {
+    return Math.floor(Math.random() * arr.length);
 }
 
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
+function shuffleArray(arr) {
+    let shuffled = arr.slice();
+    for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
+    return shuffled;
 }
 
-function generateGrid() {
-    const gridContainer = document.getElementById("grid");
-    gridContainer.innerHTML = "";
+function getRandomDoors() {
+    const startIndex = getRandomIndex(doors);
+    currentDoors = [...doors.slice(startIndex), ...doors.slice(0, startIndex)];
+    return currentDoors;
+}
 
-    // ชื่อช่องใหม่ที่คุณต้องการ
-    const cellNames = ["CC1", "CC2", "CC3", "CC4", "CC5", "CC6", "CC7", "CC8", "CC9"];
-    const doors = ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"];
-    
-    // สุ่มประตูตามเข็มนาฬิกา
-    const firstDoorIndex = getRandomInt(0, 7);  // Random position for the first door
-    const doorPlacement = {};
-    for (let i = 0; i < doors.length; i++) {
-        doorPlacement[cellNames[(firstDoorIndex + i) % 9]] = doors[i];
-    }
+function randomizeGrid() {
+    const shuffledUpper = shuffleArray([...upperNumbers]);
+    const shuffledLower = shuffleArray([...lowerNumbers]);
+    const shuffledPieces = shuffleArray([...pieces]);
 
-    // สุ่มข้อความ U1-U12 และ L1-L12
-    const upperMessages = [
-        "วังชะตา(เหมี่ยเก็ง)", "วังลาภะ(ไฉ่แป๊ะ)", "วังญาติ(เฮียตี๋)",
-        "วังอสังหา(ฉั่งแทะ)", "วังบุตร(หน่ำนึ่ง)", "วังบริวาร(หน่งป๊ก)",
-        "วังสมรส(ซีเฉียบ)", "วังสุขภาพ(จิบแอะ)", "วังเดินทาง(เซียงอี๊)",
-        "วังอำนาจ(กัวลก)", "วังวาสนา (ฮกเต็ก)", "วังคุณค่า(เซี่ยงเหมา)"
-    ];
-    const lowerMessages = [
-        "พัฒนา(เชี่ยงแซ)", "เสน่หา(หมกยก)", "บัณฑิต(กวงตั่ว)", 
-        "ตำแหน่ง(ลิ่มกัว)", "ศักดิ์ศรี(ตี้อ๋วง)", "เสื่อม(ซวย)", 
-        "เจ็บป่วย(แป่)", "มรณะ(ซี่)", "กองคลัง(หมอ)", "สูญสิ้น(เจ๊าะ)", 
-        "ครรภ์(ทอ)", "ทารก(เอี๊ยง)"
-    ];
+    grid.forEach((id, index) => {
+        const upper = shuffledUpper[index];
+        const lower = shuffledLower[index];
+        const door = currentDoors[index];
+        const piece = shuffledPieces[index];
 
-    // สุ่มข้อความ U1-U12 และ L1-L12 ในแต่ละช่อง
-    const upperPlacement = {};
-    const lowerPlacement = {};
-    for (let i = 0; i < 9; i++) {
-        upperPlacement[cellNames[i]] = upperMessages[i % 12];
-        lowerPlacement[cellNames[i]] = lowerMessages[i % 12];
-    }
+        document.getElementById(id).innerHTML = `
+            <div>${upper} (${upperNumbers.indexOf(upper) + 1})</div>
+            <div>${lower} (${lowerNumbers.indexOf(lower) + 1})</div>
+            <div>${door}</div>
+            <div>หมาก: ${piece.type} (${piece.id})</div>
+        `;
+    });
+}
 
-    // สุ่มหมาก
-    const pieces = ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9", "I0"];
-    const pieceImages = {
-        I1: "https://via.placeholder.com/30/0000FF/FFFFFF?text=I1", // blue droplet
-        I2: "https://via.placeholder.com/30/FF0000/FFFFFF?text=I2", // red triangle
-        I3: "https://via.placeholder.com/30/00FF00/FFFFFF?text=I3", // green square
-        I4: "https://via.placeholder.com/30/FFFFFF/000000?text=I4", // white circle
-        I5: "https://via.placeholder.com/30/FFFF0
+document.getElementById('randomize-btn').addEventListener('click', () => {
+    getRandomDoors();
+    randomizeGrid();
+});
